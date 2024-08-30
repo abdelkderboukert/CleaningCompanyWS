@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -15,11 +14,7 @@ from datetime import date
 from rest_framework import viewsets, filters
 import os
 from django.http import HttpResponse
-from openpyxl import Workbook
-from openpyxl.utils.cell import get_column_letter
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-import openpyxl
 from datetime import datetime
 from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import * 
+from .models import *
