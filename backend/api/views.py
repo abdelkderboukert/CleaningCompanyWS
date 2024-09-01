@@ -18,3 +18,4 @@ from datetime import datetime
 from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import *
+from .serializers import *
