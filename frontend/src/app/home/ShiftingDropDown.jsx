@@ -18,6 +18,7 @@ const ShiftingDropDown = () => {
   return (
     <motion.div className="flex h-full w-full justify-start items-center text-neutral-200 md:justify-center"initial={{opacity:0}} animate={{opacity:1}} transition={{duration:4}}>
       <Tabs />
+      {/* <AllTabs /> */}
     </motion.div>
   );
 };
@@ -39,7 +40,7 @@ const Tabs = () => {
   return (
     <div
       onMouseLeave={() => handleSetSelected(null)}
-      className="relative flex h-fit gap-2"
+      className="relative flex flex-row h-fit gap-2"
     >
       {TABS.map((t) => {
         return (
@@ -281,6 +282,12 @@ const Blog = () => {
       </button>
     </div>
   );
+};
+
+const AllTabs = () => {
+  return <div>
+    <Tabs/>
+  </div>;
 };
 
 const TABS = [
