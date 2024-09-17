@@ -9,11 +9,12 @@ import { useState } from "react";
 
 export default function HomePage() {
   const [Gelori, setGelori] = useState(false)
+  const a=[1,2,3,4,5,6,7,8,9]
   return (
     <>
       <motion.div
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
+        initial={{ y: 48, opacity: 0, marginTop: 48 }}
+        whileInView={{ y: 0, opacity: 1, marginTop:0 }}
         transition={{ ease: "easeInOut", duration: 0.75 }}
         className="h-dvh w-dvw p-5"
       >
@@ -66,57 +67,116 @@ export default function HomePage() {
         </div>
         {/* <AnimatedListDemo/> */}
       </motion.div>
-      <section className="h-screen w-screen bg-black flex p-10 " content=" ">
+      <motion.section
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.25,
+            },
+          },
+        }}
+        initial="hidden"
+        whileInView="show"
+        className="h-max w-screen gap-5 grid-flow-row grid grid-cols-4 bg-black p-10 "
+        content=" "
+      >
         <motion.div
-          className=" relative h-full w-max bg-slate-600"
-          initial={{ position: "relative" }}
-          animate={
-            Gelori
-              ? { display: "flex", flexDirection: "row", position: "static" }
-              : { position: "relative" } //{ display: "flex", flexDirection: "row", position: "static" }
-          }
-          transition={{ duration: 5 }}
-          onClick={() => {
-            setGelori(!Gelori);
-            console.log(Gelori);
+          variants={{
+            hidden: { y: 48, opacity: 0 },
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                staggerChildren: 0.25,
+              },
+            },
           }}
+          onAnimationComplete={() => {
+            document.querySelectorAll("motion.span").forEach((span) => {
+              span.animate({ x: 0, opacity: 1 });
+            });
+          }}
+          className="h-[350px] w-full "
         >
-          {/* {!Gelori && ( */}
-
-          <motion.div
-            initial={{ top: 40, left: 40, position: "absolute" }}
-            animate={
-              !Gelori
-                ? { display: "flex", position: "static" }
-                : { top: 40, left: 40, position: "absolute" }
-            }
-            transition={{ duration: 5 }}
-            className="flex h-60 w-40 rounded-3xl bg-red-600"
-          ></motion.div>
-          <motion.div
-            initial={{ top: 80, left: 96, position: "absolute" }}
-            animate={
-              !Gelori
-                ? { display: "flex", position: "static" }
-                : { top: 80, left: 96, position: "absolute" }
-            }
-            transition={{ duration: 5 }}
-            className="flex h-60 w-40 rounded-3xl bg-green-600"
-          ></motion.div>
-          <motion.div
-            initial={{ top: 112, left: 16, position: "absolute" }}
-            animate={
-              !Gelori
-                ? { display: "flex", position: "static" }
-                : { top: 112, left: 16, position: "absolute" }
-            }
-            transition={{ duration: 5 }}
-            className=" h-60 w-40 rounded-3xl bg-amber-400"
-          ></motion.div>
-
-          {/* )} */}
+          <div className="flex p-4 rounded-3xl bg-white h-full overflow-hidden">
+            <motion.span
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.75 }}
+              className="mt-auto text-black select-none "
+            >
+              hhhhh <br />{" "}
+              <span className="text-neutral-700 text-3xl">1500.00 Da</span>{" "}
+            </motion.span>
+          </div>
         </motion.div>
-      </section>
+        <motion.div
+          variants={{
+            hidden: { y: 48, opacity: 0 },
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                staggerChildren: 0.25,
+              },
+            },
+          }}
+          onAnimationComplete={() => {
+            // Trigger the animation of the span elements
+            document.querySelectorAll("motion.span").forEach((span) => {
+              span.animate({ x: 0, opacity: 1 });
+            });
+          }}
+          className="h-[350px] w-full "
+        >
+          <div className="flex p-4 rounded-3xl bg-white h-full overflow-hidden">
+            <motion.span
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.75 }}
+              className="mt-auto text-black select-none "
+            >
+              hhhhh <br />{" "}
+              <span className="text-neutral-700 text-3xl">1500.00 Da</span>{" "}
+            </motion.span>
+          </div>
+        </motion.div>
+        {a.map((ag)=>{
+          <motion.div
+            variants={{
+              hidden: { y: 48, opacity: 0 },
+              show: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  staggerChildren: 0.25,
+                },
+              },
+            }}
+            onAnimationComplete={() => {
+              // Trigger the animation of the span elements
+              document.querySelectorAll("motion.span").forEach((span) => {
+                span.animate({ x: 0, opacity: 1 });
+              });
+            }}
+            className="h-[350px] w-full "
+          >
+            <div className="flex p-4 rounded-3xl bg-white h-full overflow-hidden">
+              <motion.span
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.75 }}
+                className="mt-auto text-black select-none "
+              >
+                hhhhh <br />{" "}
+                <span className="text-neutral-700 text-3xl">1500.00 Da</span>{" "}
+              </motion.span>
+            </div>
+          </motion.div>;
+        })}
+      </motion.section>
       <Schedule />
     </>
   );
