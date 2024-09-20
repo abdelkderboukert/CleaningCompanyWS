@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import { useInView, motion } from "framer-motion";
 import Link from "next/link";
 
