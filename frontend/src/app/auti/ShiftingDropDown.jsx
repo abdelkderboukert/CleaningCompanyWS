@@ -5,6 +5,7 @@ import {
   FiBarChart2,
   FiChevronDown,
   FiHome,
+  FiShoppingBag,
   FiPieChart,
   FiCheck,
   FiTable,
@@ -219,9 +220,7 @@ const Products = () => {
 const Pricing = () => {
   return (
     <div className="grid grid-cols-3 gap-4 divide-x divide-neutral-700">
-      <div
-        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
-      >
+      <div className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50">
         <FiHome className="mb-2 text-xl text-green-800" />
         <Link href="/">
           <span className="text-xs">Home</span>
@@ -234,12 +233,10 @@ const Pricing = () => {
         <FiCheck className="mb-2 text-xl text-green-800" />
         <Link href="/todotask">Todo</Link>
       </div>
-      <div
-        className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50"
-      >
-        <FiDollarSign className="mb-2 text-xl text-green-800" />
-        <Link href="/tarif">
-          <span className="text-xs">Tarif</span>
+      <div className="flex w-full flex-col items-center justify-center py-2 text-neutral-400 transition-colors hover:text-neutral-50">
+        <FiShoppingBag className="mb-2 text-xl text-green-800" />
+        <Link href="/shope">
+          <span className="text-xs">shope</span>
         </Link>
       </div>
     </div>
@@ -256,7 +253,7 @@ const Blog = () => {
             src="/imgs/blog/4.png"
             alt="Placeholder image"
           />
-          <h4 className="mb-0.5 text-sm font-medium">Lorem ipsum dolor</h4>
+          <h4 className="mb-0.5 text-sm font-medium">As cleaning company</h4>
           <p className="text-xs text-neutral-400">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet illo
             quidem eos.
@@ -268,7 +265,7 @@ const Blog = () => {
             src="/imgs/blog/5.png"
             alt="Placeholder image"
           />
-          <h4 className="mb-0.5 text-sm font-medium">Lorem ipsum dolor</h4>
+          <h4 className="mb-0.5 text-sm font-medium">AS papinyar on ling</h4>
           <p className="text-xs text-neutral-400">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet illo
             quidem eos.
@@ -296,11 +293,11 @@ const TABS = [
     Component: Products,
   },
   {
-    title: "Pricing",
+    title: "Monu",
     Component: Pricing,
   },
   {
-    title: "Blog",
+    title: "About Us",
     Component: Blog,
   },
 ].map((n, idx) => ({ ...n, id: idx + 1 }));
