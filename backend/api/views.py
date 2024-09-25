@@ -19,3 +19,30 @@ from django.db.models import F
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import *
 from .serializers import *
+
+
+class CategoryListView(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        data = []
+        for category in categories:
+            plants = Plant.objects.filter(category=category)
+            category_serializer = CategorySerializer(category)
+            plants_serializer = PlantSerializer(plants, many=True)
+            data.append({
+                'category': category_serializer.data,
+                'plants': plants_serializer.data
+            })
+        return Response(data)
+    
+class CategoryDetailView(APIView):
+    def get(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        plants = Plant.objects.filter(category=category)
+        category_serializer = CategorySerializer(category)
+        plants_serializer = PlantSerializer(plants, many=True)
+        data = {
+            'category': category_serializer.data,
+            'plants': plants_serializer.data
+        }
+        return Response(data)

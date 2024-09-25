@@ -2,36 +2,54 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FiShoppingBag, FiMoreVertical } from "react-icons/fi";
-import ShiftingDropDown from "../auti/ShiftingDropDown";
+import ShiftingDropDown from "../../auti/ShiftingDropDown";
 import { useEffect } from "react";
 import { useState } from "react";
-import Schedule from "../auti/Schedule";
+import axios from "axios";
+import Schedule from "../../auti/Schedule";
 
-export default function page() {
-  const [plants, setData] = useState([]);
-  const [title, setTitle] = useState("");
+export default function page( params ) {
+  let h= params.id
+  const [category, setCategory] = useState({});
+  const [plants, setPlants] = useState([]);
   const [basket, setBasket] = useState([]);
+  localStorage.setItem("basket", JSON.stringify(basket));
 
-  basket.length != 0? console.log("is done") : console.log("isnote");
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("data");
-    const storedTitle = localStorage.getItem("title");
-    if (storedData && storedTitle) {
-      setData(JSON.parse(storedData));
-      setTitle(JSON.parse(storedTitle));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("data");
+  //   const storedTitle = localStorage.getItem("title");
+  //   if (storedData && storedTitle) {
+  //     setData(JSON.parse(storedData));
+  //     setTitle(JSON.parse(storedTitle));
+  //   }
+  // }, []);
 
   const [hovered, setHovered] = useState(null);
   const handleMouseEnter = (index) => {
     setHovered(index);
-    console.log(index, hovered);
   };
 
   const handleMouseLeave = () => {
     setHovered(null);
   };
+ 
+  const handleAddToBasket = (id) => {
+    setBasket((basket) => [...basket, id]);
+    localStorage.setItem("basket", JSON.stringify(basket));
+  };
+
+  useEffect(() => {
+    // Replace with the ID of the category you want to fetch
+    axios
+      .get(`/api/categories/${h}/`)
+      .then((response) => {
+        setCategory(response.data.category);
+        setPlants(response.data.plants);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
@@ -82,22 +100,15 @@ export default function page() {
           <div className="absolute h-8 w-8 top-0 right-0 m-5 text-3xl lg:text-4xl text-white">
             <FiShoppingBag />
             {basket.length != 0 ? (
-                <div className="absolute h-3/4 w-3/4 -top-4 -right-4 m-2 text-xl p-auto lg:text-xl text-white bg-red-700 rounded-full">
-                  <span className="flex h-full w-full justify-center items-center">
-                    {basket.length}
-                  </span>
-                </div>
-                
-              ) : (
-                <></>
-              )}
+              <div className="absolute h-3/4 w-3/4 -top-4 -right-4 m-2 text-xl p-auto lg:text-xl text-white bg-red-700 rounded-full">
+                <span className="flex h-full w-full justify-center items-center">
+                  {basket.length}
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          {/* <div className="absolute h-8 w-8 top-0 right-0 m-5 text-3xl lg:text-4xl text-white">
-            <FiShoppingBag />
-            <div className="absolute h-3/4 w-3/4 -top-4 -right-4 m-2 text-xl p-auto lg:text-xl text-white bg-red-700 rounded-full">
-              <span className="flex h-full w-full justify-center items-center">1</span>
-            </div>
-          </div> */}
         </div>
         <motion.div
           variants={{
@@ -114,7 +125,7 @@ export default function page() {
           content=" "
           className="flex justify-center items-center playwrite-pe-f1 text-3xl sm:text-4xl lg:text-5xl text-green-500"
         >
-          {title} <span className="text-xs">({plants.length})</span>
+          {category.name} <span className="text-xs">({plants.length})</span>
         </motion.div>
         <motion.div
           variants={{
@@ -158,7 +169,7 @@ export default function page() {
                 className="flex  rounded-3xl bg-white h-full overflow-hidden shadow-xl shadow-black"
                 whileHover={{ scale: 1.1 }}
                 style={{
-                  backgroundImage: `url(${plant.image})`,
+                  backgroundImage: `url(${plant.photo})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -184,9 +195,12 @@ export default function page() {
                       transition={{ duration: 1 }}
                       className=" mt-5 gird h-1/2 w-20 gap-2 grid-flow-row flex-row "
                     >
-                      <div className="flex bg-black w-full h-10 rounded-tl-xl justify-center items-center">
+                      <button
+                        className="flex bg-black w-full h-10 rounded-tl-xl justify-center items-center"
+                        onClick={() => handleAddToBasket(plant.id)}
+                      >
                         <FiShoppingBag />
-                      </div>
+                      </button>
                       <div className="flex bg-black w-full h-10 justify-center items-center">
                         <FiMoreVertical />
                       </div>
@@ -215,6 +229,7 @@ export default function page() {
           ))}
         </motion.div>
       </motion.section>
+      <section className="w-screen h-16 bg-gradient-to-b from-neutral-900 to-black"></section>
       <Schedule />
     </>
   );

@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import ButtonRM from "../auti/ButtonRM";
 import { FiShoppingBag, FiMoreVertical } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ShiftingDropDown from "../auti/ShiftingDropDown";
+import axios from "axios";
 
 export default function page() {
   const [plants, setPlants] = useState([
@@ -158,7 +159,22 @@ export default function page() {
         "Gladiolus flowers are tall and stately, representing strength and moral integrity.",
     },
   ]);
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/categories/")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const [basket, setBasket] = useState([]);
+
   return (
     <>
       <motion.div
@@ -228,7 +244,10 @@ export default function page() {
         </div>
         {/* <AnimatedListDemo/> */}
       </motion.div>
-      <ListProd title="plants" plants={plants} />
+      {categories.map((category) => (
+        <ListProd key={category.id} title={category.name} plants={category.plants} />
+      ))}
+
       <ListProd title="plants1" plants={plants} />
       <ListProd title="plants2" plants={plants} />
       <Schedule />
@@ -236,17 +255,17 @@ export default function page() {
   );
 }
 
-const ListProd = ({ title, plants }) => {
+const ListProd = ({ title, plants, key }) => {
   const [hovered, setHovered] = useState(null);
   const handleMouseEnter = (index) => {
     setHovered(index);
     console.log(index, hovered);
-  };
+  }
 
-  const handleClick = () => {
-    localStorage.setItem("data", JSON.stringify(plants));
-    localStorage.setItem("title", JSON.stringify(title));
-    window.location.href = "/moreabout";
+  const handleClick = (id) => {
+    // localStorage.setItem("data", JSON.stringify(plants));
+    // localStorage.setItem("title", JSON.stringify(title));
+    window.location.href = `/shope/${id}`;
   };
 
   const handleMouseLeave = () => {
@@ -328,7 +347,7 @@ const ListProd = ({ title, plants }) => {
               className="flex  rounded-3xl bg-white h-full overflow-hidden shadow-xl shadow-black"
               whileHover={{ scale: 1.1 }}
               style={{
-                backgroundImage: `url(${plant.image})`,
+                backgroundImage: `url(${plant.photo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -384,9 +403,16 @@ const ListProd = ({ title, plants }) => {
           </motion.div>
         ))}
       </motion.div>
-      <div>
-        <h1>Page 1</h1>
-        <button onClick={handleClick}>Go to Page 2</button>
+      <div className="flex h-14 p-1">
+        {/* <button
+          className="h-full w-32 sm:w-40 bg-slate-500 rounded-xl ml-auto mr-3"
+          onClick={handleClick}
+        >
+          Go to Page 2
+        </button> */}
+        <ButtonRM>
+          <button onClick={() => handleClick(key)}>Go to Page 2</button>
+        </ButtonRM>
       </div>
     </motion.section>
   );
