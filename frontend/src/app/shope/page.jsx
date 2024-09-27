@@ -8,6 +8,8 @@ import { FiShoppingBag, FiMoreVertical } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import ShiftingDropDown from "../auti/ShiftingDropDown";
 import axios from "axios";
+import Basket from "../auti/Basket";
+import Contentt from "../auti/Content";
 
 export default function page() {
   const [categories, setCategories] = useState([]);
@@ -75,18 +77,9 @@ export default function page() {
               animate={{ marginLeft: "calc( 75% )" }}
               transition={{ duration: 1 }}
             />
-            <div className="absolute h-8 w-8 top-0 right-0 m-5 text-3xl lg:text-4xl text-white">
-              <FiShoppingBag />
-              {basket.length != 0 ? (
-                <div className="absolute h-3/4 w-3/4 -top-4 -right-4 m-2 text-xl p-auto lg:text-xl text-white bg-red-700 rounded-full">
-                  <span className="flex h-full w-full justify-center items-center">
-                    {basket.length}
-                  </span>
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
+            <Contentt basket={basket} >
+              <Basket basket={basket} />
+            </Contentt>
           </div>
           <div className="flex flex-col h-full w-full p-10">
             <div className="flex w-max h-max mt-6 justify-center select-none items-center mx-auto playwrite-pe-f1 text-2xl sm:text-5xl lg:text-7xl text-white">
@@ -118,12 +111,9 @@ export default function page() {
 
 const ListProd = ({ title, plants, id, handleAddToBasket }) => {
   const [hovered, setHovered] = useState(null);
-  const [basket, setBasket] = useState([]);
   const handleMouseEnter = (index) => {
     setHovered(index);
   };
-  console.log(basket);
-  console.log(basket);
   const handleClick = (id) => {
     window.location.href = `/shope/${id}`;
   };

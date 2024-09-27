@@ -7,18 +7,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import Schedule from "../../auti/Schedule";
+import Basket from "../../auti/Basket";
+import Contentt from "../../auti/Content";
 
 export default function page({ params }) {
   const [category, setCategory] = useState({});
   const [plants, setPlants] = useState([]);
   const [basket, setBasket] = useState([]);
-
-  useEffect(() => {
-    const storedBasket = sessionStorage.getItem("basket");
-    if (storedBasket != null) {
-      setBasket(JSON.parse(storedBasket));
-    }
-  }, []);
 
   useEffect(() => {
     const storedBasket = sessionStorage.getItem("basket");
@@ -101,18 +96,9 @@ export default function page({ params }) {
             animate={{ marginLeft: "calc( 75% )" }}
             transition={{ duration: 1 }}
           />
-          <div className="absolute h-8 w-8 top-0 right-0 m-5 text-3xl lg:text-4xl text-white">
-            <FiShoppingBag />
-            {basket.length != 0 ? (
-              <div className="absolute h-3/4 w-3/4 -top-4 -right-4 m-2 text-xl p-auto lg:text-xl text-white bg-red-700 rounded-full">
-                <span className="flex h-full w-full justify-center items-center">
-                  {basket.length}
-                </span>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
+          <Contentt basket={basket} >
+            <Basket basket={basket} />
+          </Contentt>
         </div>
         <motion.div
           variants={{
