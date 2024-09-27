@@ -1,16 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import { useInView, motion } from "framer-motion";
+import { useInView, motion, inView } from "framer-motion";
 import Link from "next/link";
 
 const ButtonRM = ({ onClick, children }) => {
-  const ref = React.createRef();
-  const isInView = useInView(ref);
+  // const ref = React.createRef();
+  // const isInView = useInView(ref);
 
   const [hoverD, setHoverD] = useState(false);
+  const isInView = true;
   return (
     <motion.div
-      ref={ref}
+      // ref={ref}
       onHoverStart={() => setHoverD(true)}
       onHoverEnd={() => setHoverD(false)}
       onClick={onClick}

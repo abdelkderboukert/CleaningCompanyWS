@@ -10,161 +10,11 @@ import ShiftingDropDown from "../auti/ShiftingDropDown";
 import axios from "axios";
 
 export default function page() {
-  const [plants, setPlants] = useState([
-    {
-      name: "Rose",
-      price: 10099,
-      image: "https://picsum.photos/200/300",
-      description:
-        "A classic and timeless choice, roses are a symbol of love and beauty.A classic and timeless choice, roses are a symbol of love and beauty.A classic and timeless choice, roses are a symbol of love and beauty.A classic and timeless choice, roses are a symbol of love and beauty.A classic and timeless choice, roses are a symbol of love and beauty.A classic and timeless choice, roses are a symbol of love and beauty.",
-    },
-    {
-      name: "Lily",
-      price: 899,
-      image: "https://picsum.photos/200/301",
-      description:
-        "Lilies are known for their elegant and trumpet-shaped flowers, symbolizing purity and innocence.",
-    },
-    {
-      name: "Sunflower",
-      price: 1299,
-      image: "https://picsum.photos/200/302",
-      description:
-        "Sunflowers are bright and cheerful, representing warmth and happiness.",
-    },
-    {
-      name: "Daisy",
-      price: 999,
-      image: "https://picsum.photos/200/303",
-      description:
-        "Daisies are a classic and simple flower, symbolizing innocence and new beginnings.",
-    },
-    {
-      name: "Tulip",
-      price: 1199,
-      image: "https://picsum.photos/200/304",
-      description:
-        "Tulips are a vibrant and cup-shaped flower, representing love and passion.",
-    },
-    {
-      name: "Violet",
-      price: 799,
-      image: "https://picsum.photos/200/305",
-      description:
-        "Violets are small and delicate, symbolizing modesty and humility.",
-    },
-    {
-      name: "Poppy",
-      price: 1049,
-      image: "https://picsum.photos/200/306",
-      description:
-        "Poppies are a bright and delicate flower, representing creativity and imagination.",
-    },
-    {
-      name: "Orchid",
-      price: 1599,
-      image: "https://picsum.photos/200/307",
-      description:
-        "Orchids are exotic and elegant, symbolizing luxury and beauty.",
-    },
-    {
-      name: "Carnation",
-      price: 949,
-      image: "https://picsum.photos/200/308",
-      description:
-        "Carnations are a long-lasting and fragrant flower, representing love and fascination.",
-    },
-    {
-      name: "Peony",
-      price: 1249,
-      image: "https://picsum.photos/200/309",
-      description:
-        "Peonies are lush and full-bodied, symbolizing good fortune and prosperity.",
-    },
-    {
-      name: "Hydrangea",
-      price: 1499,
-      image: "https://picsum.photos/200/310",
-      description:
-        "Hydrangeas are big and showy, representing heartfelt emotions and gratitude.",
-    },
-    {
-      name: "Iris",
-      price: 1099,
-      image: "https://picsum.photos/200/311",
-      description:
-        "Iris flowers are elegant and slender, symbolizing faith and wisdom.",
-    },
-    {
-      name: "Lavender",
-      price: 849,
-      image: "https://picsum.photos/200/312",
-      description:
-        "Lavender is a calming and soothing flower, representing peace and serenity.",
-    },
-    {
-      name: "Snapdragon",
-      price: 1149,
-      image: "https://picsum.photos/200/313",
-      description:
-        "Snapdragons are tall and colorful, symbolizing strength and courage.",
-    },
-    {
-      name: "Gerbera",
-      price: 1299,
-      image: "https://picsum.photos/200/314",
-      description:
-        "Gerbera daisies are bright and cheerful, representing happiness and innocence.",
-    },
-    {
-      name: "Alstroemeria",
-      price: 1099,
-      image: "https://picsum.photos/200/315",
-      description:
-        "Alstroemeria flowers are long-lasting and fragrant, symbolizing friendship and devotion.",
-    },
-    {
-      name: "Baby's Breath",
-      price: 999,
-      image: "https://picsum.photos/200/316",
-      description:
-        "Baby's Breath is a delicate and airy flower, representing everlasting love and innocence.",
-    },
-    {
-      name: "Queen Anne's Lace",
-      price: 899,
-      image: "https://picsum.photos/200/317",
-      description:
-        "Queen Anne's Lace is a lacy and delicate flower, symbolizing romance and nostalgia.",
-    },
-    {
-      name: "Daffodil",
-      price: 1199,
-      image: "https://picsum.photos/200/318",
-      description:
-        "Daffodils are bright and trumpet-shaped, representing new beginnings and renewal.",
-    },
-    {
-      name: "Calla Lily",
-      price: 1499,
-      image: "https://picsum.photos/200/319",
-      description:
-        "Calla Lilies are elegant and sophisticated, symbolizing beauty and elegance.",
-    },
-    {
-      name: "Gladiolus",
-      price: 1299,
-      image: "https://picsum.photos/200/320",
-      description:
-        "Gladiolus flowers are tall and stately, representing strength and moral integrity.",
-    },
-  ]);
-
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/api/categories/")
+      .get("http://127.0.0.1:8000/api/categories/")
       .then((response) => {
         setCategories(response.data);
       })
@@ -172,8 +22,20 @@ export default function page() {
         console.error(error);
       });
   }, []);
-
   const [basket, setBasket] = useState([]);
+
+  useEffect(() => {
+    const storedBasket = sessionStorage.getItem("basket");
+    if (storedBasket != null) {
+      setBasket(JSON.parse(storedBasket));
+    }
+  }, []);
+
+  const handleAddToBasket = (id) => {
+    setBasket((basket) => [...basket, id]);
+    localStorage.setItem("basket", JSON.stringify(basket));
+    console.log(JSON.parse(sessionStorage.getItem("basket")));
+  };
 
   return (
     <>
@@ -235,36 +97,34 @@ export default function page() {
               the service that he giv , i just try some word to check if i can
               do it{" "}
             </div>
-            {/* <ButtonRM>
-              <Link href="/attendance" className="h-full w-full select-none">
-                Attendance
-              </Link>
-            </ButtonRM> */}
           </div>
         </div>
-        {/* <AnimatedListDemo/> */}
       </motion.div>
       {categories.map((category) => (
-        <ListProd key={category.id} title={category.name} plants={category.plants} />
+        <>
+          <ListProd
+            key={category.category.id}
+            id={category.category.id}
+            title={category.category.name}
+            plants={category.plants}
+            handleAddToBasket={handleAddToBasket}
+          />
+        </>
       ))}
-
-      <ListProd title="plants1" plants={plants} />
-      <ListProd title="plants2" plants={plants} />
       <Schedule />
     </>
   );
 }
 
-const ListProd = ({ title, plants, key }) => {
+const ListProd = ({ title, plants, id, handleAddToBasket }) => {
   const [hovered, setHovered] = useState(null);
+  const [basket, setBasket] = useState([]);
   const handleMouseEnter = (index) => {
     setHovered(index);
-    console.log(index, hovered);
-  }
-
+  };
+  console.log(basket);
+  console.log(basket);
   const handleClick = (id) => {
-    // localStorage.setItem("data", JSON.stringify(plants));
-    // localStorage.setItem("title", JSON.stringify(title));
     window.location.href = `/shope/${id}`;
   };
 
@@ -347,7 +207,7 @@ const ListProd = ({ title, plants, key }) => {
               className="flex  rounded-3xl bg-white h-full overflow-hidden shadow-xl shadow-black"
               whileHover={{ scale: 1.1 }}
               style={{
-                backgroundImage: `url(${plant.photo})`,
+                backgroundImage: `http://localhost:8000${plant.photo}`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -373,9 +233,12 @@ const ListProd = ({ title, plants, key }) => {
                     transition={{ duration: 1 }}
                     className=" mt-5 gird h-1/2 w-20 gap-2 grid-flow-row flex-row "
                   >
-                    <div className="flex bg-black w-full h-10 rounded-tl-xl justify-center items-center">
+                    <button
+                      className="flex bg-black w-full h-10 rounded-tl-xl justify-center items-center"
+                      onClick={() => handleAddToBasket(plant.id)}
+                    >
                       <FiShoppingBag />
-                    </div>
+                    </button>
                     <div className="flex bg-black w-full h-10 justify-center items-center">
                       <FiMoreVertical />
                     </div>
@@ -404,14 +267,8 @@ const ListProd = ({ title, plants, key }) => {
         ))}
       </motion.div>
       <div className="flex h-14 p-1">
-        {/* <button
-          className="h-full w-32 sm:w-40 bg-slate-500 rounded-xl ml-auto mr-3"
-          onClick={handleClick}
-        >
-          Go to Page 2
-        </button> */}
         <ButtonRM>
-          <button onClick={() => handleClick(key)}>Go to Page 2</button>
+          <button onClick={() => handleClick(id)}>Go to Page 2</button>
         </ButtonRM>
       </div>
     </motion.section>

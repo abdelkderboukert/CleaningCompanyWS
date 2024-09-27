@@ -8,21 +8,24 @@ import { useState } from "react";
 import axios from "axios";
 import Schedule from "../../auti/Schedule";
 
-export default function page( params ) {
-  let h= params.id
+export default function page({ params }) {
   const [category, setCategory] = useState({});
   const [plants, setPlants] = useState([]);
   const [basket, setBasket] = useState([]);
-  localStorage.setItem("basket", JSON.stringify(basket));
 
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem("data");
-  //   const storedTitle = localStorage.getItem("title");
-  //   if (storedData && storedTitle) {
-  //     setData(JSON.parse(storedData));
-  //     setTitle(JSON.parse(storedTitle));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const storedBasket = sessionStorage.getItem("basket");
+    if (storedBasket != null) {
+      setBasket(JSON.parse(storedBasket));
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedBasket = sessionStorage.getItem("basket");
+    if (storedBasket != null) {
+      setBasket(JSON.parse(storedBasket));
+    }
+  }, []);
 
   const [hovered, setHovered] = useState(null);
   const handleMouseEnter = (index) => {
@@ -32,16 +35,16 @@ export default function page( params ) {
   const handleMouseLeave = () => {
     setHovered(null);
   };
- 
+
   const handleAddToBasket = (id) => {
     setBasket((basket) => [...basket, id]);
-    localStorage.setItem("basket", JSON.stringify(basket));
+    sessionStorage.setItem("basket", JSON.stringify(basket));
   };
 
   useEffect(() => {
     // Replace with the ID of the category you want to fetch
     axios
-      .get(`/api/categories/${h}/`)
+      .get(`http://127.0.0.1:8000/api/categories/${params.id}/`)
       .then((response) => {
         setCategory(response.data.category);
         setPlants(response.data.plants);
@@ -50,6 +53,7 @@ export default function page( params ) {
         console.error(error);
       });
   }, []);
+
 
   return (
     <>

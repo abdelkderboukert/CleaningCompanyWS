@@ -171,11 +171,11 @@ const Products = () => {
   const [cards, setCards] = useState([]);
   // DEFAULT_CARDS
 
-  useEffect(() => {
-    fetch("http://localhost:8000/api/todo/")
-      .then((response) => response.json())
-      .then((data) => {setCards(data)});
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/api/todo/")
+  //     .then((response) => response.json())
+  //     .then((data) => {setCards(data)});
+  // }, []);
 
   return (
     <div>

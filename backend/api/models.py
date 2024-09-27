@@ -6,7 +6,14 @@ class Category(models.Model):
 
 class Plant(models.Model):
     name = models.CharField(max_length=255)
-    price = models.ImageField()
+    price = models.IntegerField()
     description = models.TextField()
     photo = models.ImageField(upload_to='plants_photos')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+class User(models.Model):
+    name = models.CharField(max_length=40)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+class Basket(models.Model):
+    plants = models.ManyToManyField(Plant)

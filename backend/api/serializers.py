@@ -9,4 +9,9 @@ class CategorySerializer(serializers.ModelSerializer):
 class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
-        fields = ['id', 'name', 'price', 'description', 'photo']
+        fields = ['id', 'name', 'price', 'description', 'photo','category']
+
+    def get_photo(self, obj):
+        request = self.context.get('request')
+        photo_url = obj.photo.url
+        return request.build_absolute_uri(photo_url)
