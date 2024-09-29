@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Contentt({ children, basket }) {
-    const [isHovred, setIsHovred] = useState(false)
+  const [isHovred, setIsHovred] = useState(false)
   return (
     <div
       onMouseEnter={() => setIsHovred(true)}
@@ -19,6 +19,19 @@ export default function Contentt({ children, basket }) {
 }
 
 const Content = ({ basket }) => {
+  const [basket1,setBasket1] = useState([])
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/plant/?ids=${basket.join(",")}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => 
+        // setBasket1((basket1) => [...basket1, ...data])
+        setBasket1(data)
+      )
+      .catch((error) => console.error(error));
+  }, [basket]);
+  console.table(basket1)
   return (
     <motion.div
       id="overlay-content"
@@ -38,7 +51,11 @@ const Content = ({ basket }) => {
     >
       <Bridge />
       <Nub />
-      <div className="bg-slate-100 h-full w-full"></div>
+      {basket1.map((b) => (
+        <div key={b.index} className=" w-full h-10 text-white">
+          {b.id}
+        </div>
+      ))}
     </motion.div>
   );
 };

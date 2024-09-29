@@ -31,12 +31,12 @@ export default function page() {
     if (storedBasket != null) {
       setBasket(JSON.parse(storedBasket));
     }
+    
   }, []);
 
   const handleAddToBasket = (id) => {
     setBasket((basket) => [...basket, id]);
     localStorage.setItem("basket", JSON.stringify(basket));
-    console.log(JSON.parse(sessionStorage.getItem("basket")));
   };
 
   return (

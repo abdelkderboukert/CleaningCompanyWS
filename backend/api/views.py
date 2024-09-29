@@ -46,3 +46,19 @@ class CategoryDetailView(APIView):
             'plants': plants_serializer.data
         }
         return Response(data)
+    
+
+class PlantListView(APIView):
+    def get(self, request):
+        ids = request.query_params.get('ids', None)
+        if ids is None:
+            return Response({'error': 'ids query parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+        ids = [int(id) for id in ids.split(',')]
+        plant_list = []
+        for id in ids:
+            plant = Plant.objects.filter(id=id).first()
+            if plant:
+                serializer = PlantSerializer(plant)
+                plant_list.append(serializer.data)
+        
+        return Response(plant_list)
