@@ -18,9 +18,19 @@ export default function page({ params }) {
   useEffect(() => {
     const storedBasket = sessionStorage.getItem("basket");
     if (storedBasket != null) {
-      setBasket(JSON.parse(storedBasket));
+      try {
+        setBasket(JSON.parse(storedBasket));
+      } catch (error) {
+        console.error("Error parsing stored basket:", error);
+      }
     }
   }, []);
+
+  const handleAddToBasket = (id) => {
+    const newBasket = [...basket, id];
+    setBasket(newBasket);
+    sessionStorage.setItem("basket", JSON.stringify(newBasket));
+  };
 
   const [hovered, setHovered] = useState(null);
   const handleMouseEnter = (index) => {
@@ -29,11 +39,6 @@ export default function page({ params }) {
 
   const handleMouseLeave = () => {
     setHovered(null);
-  };
-
-  const handleAddToBasket = (id) => {
-    setBasket((basket) => [...basket, id]);
-    sessionStorage.setItem("basket", JSON.stringify(basket));
   };
 
   useEffect(() => {

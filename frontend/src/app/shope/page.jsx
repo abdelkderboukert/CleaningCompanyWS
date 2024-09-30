@@ -29,14 +29,18 @@ export default function page() {
   useEffect(() => {
     const storedBasket = sessionStorage.getItem("basket");
     if (storedBasket != null) {
-      setBasket(JSON.parse(storedBasket));
+      try {
+        setBasket(JSON.parse(storedBasket));
+      } catch (error) {
+        console.error("Error parsing stored basket:", error);
+      }
     }
-    
   }, []);
 
   const handleAddToBasket = (id) => {
-    setBasket((basket) => [...basket, id]);
-    localStorage.setItem("basket", JSON.stringify(basket));
+    const newBasket = [...basket, id];
+    setBasket(newBasket);
+    sessionStorage.setItem("basket", JSON.stringify(newBasket));
   };
 
   return (
@@ -78,7 +82,7 @@ export default function page() {
               transition={{ duration: 1 }}
             />
             <Contentt basket={basket} >
-              <Basket basket={basket} />
+              {/* <Basket basket={basket} /> */}
             </Contentt>
           </div>
           <div className="flex flex-col h-full w-full p-10">
@@ -230,7 +234,9 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
                       <FiShoppingBag />
                     </button>
                     <div className="flex bg-black w-full h-10 justify-center items-center">
-                      <FiMoreVertical />
+                      <Link href="/shope/[id]" as={`/shope/${plant.category}/${plant.id}`}>
+                        <FiMoreVertical />
+                      </Link>
                     </div>
                     <div className="flex bg-black w-full h-10 rounded-bl-xl justify-center items-center">
                       3
@@ -258,7 +264,7 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
       </motion.div>
       <div className="flex h-14 p-1">
         <ButtonRM>
-          <button onClick={() => handleClick(id)}>Go to Page 2</button>
+          <Link href="/shope/[id]" as={`/shope/${id}`}>go to page 2</Link>
         </ButtonRM>
       </div>
     </motion.section>
