@@ -57,7 +57,7 @@ export default function page({ params }) {
           transition={{ duration: 1 }}
         />
         <Contentt basket={basket}>
-          <Basket basket={basket} />
+          {/* <Basket basket={basket} /> */}
         </Contentt>
       </div>
     </div>
