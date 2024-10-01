@@ -27,7 +27,7 @@ export default function page({ params }) {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...basket, id];
+    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
   };

@@ -38,9 +38,10 @@ export default function page() {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...basket, id];
+    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
+    console.table(JSON.parse(sessionStorage.getItem("basket")));
   };
 
   return (
@@ -117,9 +118,6 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
   const [hovered, setHovered] = useState(null);
   const handleMouseEnter = (index) => {
     setHovered(index);
-  };
-  const handleClick = (id) => {
-    window.location.href = `/shope/${id}`;
   };
 
   const handleMouseLeave = () => {

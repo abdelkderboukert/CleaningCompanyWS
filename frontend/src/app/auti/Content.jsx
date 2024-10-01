@@ -4,19 +4,17 @@ import { FiArrowRight, FiDelete } from "react-icons/fi";
 import Link from "next/link";
 import Basket from "./Basket";
 
-export default function Contentt({ children, basket }) {
+export default function Contentt({ basket }) {
   const [bas, setBas] = useState({})
   useEffect(() => {
     setBas(basket)
   }, [basket]);
   
   const handleDrag = (ids) => {
-    console.log("hi there");
     const storedBasket = JSON.parse(sessionStorage.getItem("basket"));
     const NewBasket = storedBasket.filter((id) => id !== ids);
     setBas(NewBasket);
     sessionStorage.setItem("basket", JSON.stringify(NewBasket));
-    console.log("2", JSON.parse(sessionStorage.getItem("basket")));
     
   };
   const [isHovred, setIsHovred] = useState(false)
@@ -26,7 +24,6 @@ export default function Contentt({ children, basket }) {
       onMouseLeave={() => setIsHovred(false)}
       className=" absolute flex flex-row h-fit w-full gap-2 top-0 right-0 text-3xl lg:text-4xl text-white"
     >
-      {/* {children} */}
       <Basket basket={bas} />
       <AnimatePresence>
         {isHovred && <Content basket={bas} handleDrag={handleDrag} />}
@@ -138,7 +135,6 @@ const ScheduleItem = ({ plant, onDrag }) => {
         <Link href="/shope/[id]" as={`/shope/${plant.category}/${plant.id}`}>
           <FiArrowRight />
         </Link>
-        {/* <div className="" onClick={() => onDrag(plant.id)}></div> */}
         <FiDelete onClick={() => onDrag(plant.id)} />
       </div>
     </motion.div>

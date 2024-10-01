@@ -4,11 +4,24 @@ import ShiftingDropDown from '@/app/auti/ShiftingDropDown';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Contentt from '@/app/auti/Content';
-import Basket from '@/app/auti/Basket';
+import ButtonRM from '@/app/auti/ButtonRM';
 
 export default function page({ params }) {
-  const [basket, setBasket] = useState([]);
 
+  const [basket, setBasket] = useState([]);
+  const [plant, setPlant] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/plant/?ids=${params.ids}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) =>
+        // setBasket1((basket1) => [...basket1, ...data])
+        setPlant(data[0])
+      )
+      .catch((error) => console.error(error));
+  }, []);
   useEffect(() => {
     const storedBasket = sessionStorage.getItem("basket");
     if (storedBasket != null) {
@@ -21,12 +34,12 @@ export default function page({ params }) {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...basket, id];
+    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
   };
   return (
-    <div className="h-screen w-screen bg-neutral-900" content=" ">
+    <div className="h-max w-screen bg-neutral-900" content=" ">
       <div className=" w-full max-h-14">
         <motion.div
           className="mx-auto h-14 w-1/2 bg-black rounded-b-3xl justify-start p-8 text-neutral-200 md:justify-center"
@@ -56,10 +69,33 @@ export default function page({ params }) {
           animate={{ marginLeft: "calc( 75% )" }}
           transition={{ duration: 1 }}
         />
-        <Contentt basket={basket}>
-          {/* <Basket basket={basket} /> */}
-        </Contentt>
+        <Contentt basket={basket}>{/* <Basket basket={basket} /> */}</Contentt>
       </div>
+      <section className="h-screen w-screen p-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div
+          className="sm:col-span-1 bg-yellow-400 h-full gap-3 rounded-3xl shadow-xl shadow-black"
+          style={{
+            backgroundImage: `http://localhost:8000${plant.photo}`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          First column
+        </div>
+        <div class="flex sm:col-span-2 min-h-full h-max p-5">
+          <h1 className="text-7xl">{plant.name}</h1>
+          <div className="flex mt-auto ml-auto">
+            <ButtonRM>
+              <button
+                className="disabled"
+                onClick={() => handleAddToBasket(plant.id)}
+              >
+                add to basket
+              </button>
+            </ButtonRM>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
