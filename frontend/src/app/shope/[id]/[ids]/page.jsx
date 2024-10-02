@@ -1,13 +1,12 @@
 "use client";
-import React from 'react'
-import ShiftingDropDown from '@/app/auti/ShiftingDropDown';
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import Contentt from '@/app/auti/Content';
-import ButtonRM from '@/app/auti/ButtonRM';
+import React from "react";
+import ShiftingDropDown from "@/app/auti/ShiftingDropDown";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import Contentt from "@/app/auti/Content";
+import ButtonRM from "@/app/auti/ButtonRM";
 
-export default function page({ params }) {
-
+export default function Page({ params }) {
   const [basket, setBasket] = useState([]);
   const [plant, setPlant] = useState([]);
 
@@ -34,7 +33,8 @@ export default function page({ params }) {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
+    const storedBasket = sessionStorage.getItem("basket");
+    const newBasket = storedBasket ? [...JSON.parse(storedBasket), id] : [id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
   };
@@ -79,11 +79,16 @@ export default function page({ params }) {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        >
-          First column
-        </div>
-        <div class="flex sm:col-span-2 min-h-full h-max p-5">
-          <h1 className="text-7xl">{plant.name}</h1>
+        ></div>
+        <div class="flex flex-col sm:col-span-2 min-h-full h-max p-5">
+          <h1 className="text-4xl lg:text-7xl w-full">{plant.name}</h1>
+          <span className="text-sm text-zinc-500">prix: {plant.price}</span>
+          <span className="text-sm text-zinc-500">
+            category: {plant.category}
+          </span>
+          <br />
+          <br />
+          <span className="text-xl sm:text-3xl">{plant.description}</span>
           <div className="flex mt-auto ml-auto">
             <ButtonRM>
               <button

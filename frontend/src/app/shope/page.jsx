@@ -11,7 +11,7 @@ import axios from "axios";
 import Basket from "../auti/Basket";
 import Contentt from "../auti/Content";
 
-export default function page() {
+export default function Page() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -38,7 +38,8 @@ export default function page() {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
+    const storedBasket = sessionStorage.getItem("basket");
+    const newBasket = storedBasket ? [...JSON.parse(storedBasket), id] : [id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
     console.table(JSON.parse(sessionStorage.getItem("basket")));

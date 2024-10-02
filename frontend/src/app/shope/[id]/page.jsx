@@ -10,7 +10,7 @@ import Schedule from "../../auti/Schedule";
 import Basket from "../../auti/Basket";
 import Contentt from "../../auti/Content";
 
-export default function page({ params }) {
+export default function Page({ params }) {
   const [category, setCategory] = useState({});
   const [plants, setPlants] = useState([]);
   const [basket, setBasket] = useState([]);
@@ -27,7 +27,8 @@ export default function page({ params }) {
   }, []);
 
   const handleAddToBasket = (id) => {
-    const newBasket = [...JSON.parse(sessionStorage.getItem("basket")), id];
+    const storedBasket = sessionStorage.getItem("basket");
+    const newBasket = storedBasket ? [...JSON.parse(storedBasket), id] : [id];
     setBasket(newBasket);
     sessionStorage.setItem("basket", JSON.stringify(newBasket));
   };
