@@ -13,5 +13,5 @@ class PlantSerializer(serializers.ModelSerializer):
 
     def get_photo(self, obj):
         request = self.context.get('request')
-        photo_url = obj.photo.url
-        return request.build_absolute_uri(photo_url)
+        photo_url = Plant.photo.url
+        return request.build_absolute_uri(photo_url, port=8000)

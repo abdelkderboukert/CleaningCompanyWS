@@ -200,7 +200,7 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
               className="flex  rounded-3xl bg-white h-full overflow-hidden shadow-xl shadow-black"
               whileHover={{ scale: 1.1 }}
               style={{
-                backgroundImage: `http://localhost:8000${plant.photo}`,
+                backgroundImage: `url(${plant.photo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -233,7 +233,10 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
                       <FiShoppingBag />
                     </button>
                     <div className="flex bg-black w-full h-10 justify-center items-center">
-                      <Link href="/shope/[id]" as={`/shope/${plant.category}/${plant.id}`}>
+                      <Link
+                        href="/shope/[id]"
+                        as={`/shope/${plant.category}/${plant.id}`}
+                      >
                         <FiMoreVertical />
                       </Link>
                     </div>
@@ -263,7 +266,9 @@ const ListProd = ({ title, plants, id, handleAddToBasket }) => {
       </motion.div>
       <div className="flex h-14 p-1">
         <ButtonRM>
-          <Link href="/shope/[id]" as={`/shope/${id}`}>go to page 2</Link>
+          <Link href="/shope/[id]" as={`/shope/${id}`}>
+            go to page 2
+          </Link>
         </ButtonRM>
       </div>
     </motion.section>

@@ -17,6 +17,13 @@ export default function Contentt({ basket }) {
     sessionStorage.setItem("basket", JSON.stringify(NewBasket));
     
   };
+
+  const ClearBasket = () => {
+    // const storedBasket = JSON.parse(sessionStorage.getItem("basket"));
+    const NewBasket = [];
+    setBas(NewBasket);
+    sessionStorage.setItem("basket", JSON.stringify(NewBasket));
+  };
   const [isHovred, setIsHovred] = useState(false)
   return (
     <div
@@ -26,13 +33,13 @@ export default function Contentt({ basket }) {
     >
       <Basket basket={bas} />
       <AnimatePresence>
-        {isHovred && <Content basket={bas} handleDrag={handleDrag} />}
+        {isHovred && <Content basket={bas} handleDrag={handleDrag} ClearBasket={ClearBasket} />}
       </AnimatePresence>
     </div>
   );
 }
 
-const Content = ({ basket, handleDrag }) => {
+const Content = ({ basket, handleDrag, ClearBasket }) => {
   const [basket1, setBasket1] = useState([]);
   // const handleDrag = (ids) => (event, info) => {
   //   const { offset } = info;
@@ -77,17 +84,40 @@ const Content = ({ basket, handleDrag }) => {
     >
       <Bridge />
       <Nub />
-      <motion.h1
+      <motion.div
         initial={{ y: 48, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="mb-20 font-black uppercase playwrite-pe-f1 text-2xll lg:text-4xl text-white"
+        className="mb-10 w-full flex flex-row items-center"
       >
-        <b>Your Basket</b>
-      </motion.h1>
+        <motion.h1
+          initial={{ y: 48, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.75 }}
+          className=" font-black uppercase playwrite-pe-f1 text-2xll lg:text-4xl text-white"
+        >
+          <b>Your Basket</b>
+        </motion.h1>
+        <FiDelete
+          className="ml-auto text-2xl text-zinc-500 hover:text-red-500"
+          title="clear basket"
+          onClick={ClearBasket}
+        />
+      </motion.div>
       {basket1.map((b) => (
         <ScheduleItem key={b.index} plant={b} onDrag={handleDrag} />
       ))}
+
+      <button
+        className={
+          basket1.length != 0
+            ? "h-14 w-full bg-green-600 text-white rounded-2xl shadow-lg shadow-black"
+            : "h-14 w-full bg-green-600 text-white rounded-2xl shadow-lg shadow-black opacity-30 cursor-not-allowed"
+        }
+        title="Click to submit the form"
+      >
+        <Link href="/shope/2">buy it now</Link>
+      </button>
     </motion.div>
   );
 };
@@ -135,7 +165,10 @@ const ScheduleItem = ({ plant, onDrag }) => {
         <Link href="/shope/[id]" as={`/shope/${plant.category}/${plant.id}`}>
           <FiArrowRight />
         </Link>
-        <FiDelete onClick={() => onDrag(plant.id)} />
+        <FiDelete
+          className="hover:text-red-500"
+          onClick={() => onDrag(plant.id)}
+        />
       </div>
     </motion.div>
   );
