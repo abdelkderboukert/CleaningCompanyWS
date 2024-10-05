@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import ShiftingDropDown from "@/app/auti/ShiftingDropDown";
+import ShiftingDropDown from "@/app/_auti/ShiftingDropDown";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import Contentt from "@/app/auti/Content";
-import ButtonRM from "@/app/auti/ButtonRM";
+import Contentt from "@/app/_auti/Content";
+import ButtonRM from "@/app/_auti/ButtonRM";
 
 export default function Page({ params }) {
   const [basket, setBasket] = useState([]);

@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ButtonRM from "../auti/ButtonRM";
+import ButtonRM from "../_auti/ButtonRM";
 import { useState } from "react";
 import { FiMapPin, FiShoppingBag } from "react-icons/fi";
-import ShiftingDropDown from "../auti/ShiftingDropDown";
+import ShiftingDropDown from "../_auti/ShiftingDropDown";
 // import AnimatedListDemo from "./animatedListe";
 
 export default function HomePage() {

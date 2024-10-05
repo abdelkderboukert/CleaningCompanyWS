@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
-import Schedule from "../auti/Schedule";
+import Schedule from "../_auti/Schedule";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ButtonRM from "../auti/ButtonRM";
+import ButtonRM from "../_auti/ButtonRM";
 import { FiShoppingBag, FiMoreVertical } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import ShiftingDropDown from "../auti/ShiftingDropDown";
+import ShiftingDropDown from "../_auti/ShiftingDropDown";
 import axios from "axios";
-import Basket from "../auti/Basket";
-import Contentt from "../auti/Content";
+import Basket from "../_auti/Basket";
+import Contentt from "../_auti/Content";
 
 export default function Page() {
   const [categories, setCategories] = useState([]);
@@ -83,7 +83,7 @@ export default function Page() {
               animate={{ marginLeft: "calc( 75% )" }}
               transition={{ duration: 1 }}
             />
-            <Contentt basket={basket} >
+            <Contentt basket={basket}>
               {/* <Basket basket={basket} /> */}
             </Contentt>
           </div>

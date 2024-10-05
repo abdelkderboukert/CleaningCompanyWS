@@ -2,13 +2,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FiShoppingBag, FiMoreVertical } from "react-icons/fi";
-import ShiftingDropDown from "../../auti/ShiftingDropDown";
+import ShiftingDropDown from "../../_auti/ShiftingDropDown";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import Schedule from "../../auti/Schedule";
-import Basket from "../../auti/Basket";
-import Contentt from "../../auti/Content";
+import Schedule from "../../_auti/Schedule";
+import Basket from "../../_auti/Basket";
+import Contentt from "../../_auti/Content";
 
 export default function Page({ params }) {
   const [category, setCategory] = useState({});
@@ -54,7 +54,6 @@ export default function Page({ params }) {
         console.error(error);
       });
   }, []);
-
 
   return (
     <>
@@ -102,7 +101,7 @@ export default function Page({ params }) {
             animate={{ marginLeft: "calc( 75% )" }}
             transition={{ duration: 1 }}
           />
-          <Contentt basket={basket} >
+          <Contentt basket={basket}>
             {/* <Basket basket={basket} /> */}
           </Contentt>
         </div>
